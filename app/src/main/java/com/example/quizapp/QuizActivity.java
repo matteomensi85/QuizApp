@@ -18,8 +18,8 @@ import java.util.Locale;
 public class QuizActivity extends AppCompatActivity {
     private static final long COUNTDOWN_IN_MILLIS = 300000;
     private final int nrOfQuest = 5;
-    private Question question1 = new Question("Qual è il tag per i link ipertestuali?","<body>", "<a","Risposta1c",1);
-    private Question question2 = new Question("Qual è il tag di apertura di una colonna di una tabella'","Risposta2a", "Risposta2b","Risposta2c",1);
+    private Question question1 = new Question("Qual è il tag per i link ipertestuali?","<body>", "<a>","Risposta1c",2);
+    private Question question2 = new Question("Qual è il tag di apertura di una riga di una tabella?'","<table>", "<th>","<tr>",3);
     private Question question3 = new Question("Domanda3","Risposta3a", "Risposta3b","Risposta3c",1);
     private Question question4 = new Question("Domanda4","Risposta4a", "Risposta4b","Risposta4c",1);
     private Question question5 = new Question("Domanda5","Risposta5a", "Risposta5b","Risposta5c",1);
