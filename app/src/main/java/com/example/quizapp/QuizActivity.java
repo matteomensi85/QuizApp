@@ -18,11 +18,11 @@ import java.util.Locale;
 public class QuizActivity extends AppCompatActivity {
     private static final long COUNTDOWN_IN_MILLIS = 300000;
     private final int nrOfQuest = 5;
-    private Question question1 = new Question("Qual è il tag per i link ipertestuali?","<body>", "<a>","Risposta1c",2);
-    private Question question2 = new Question("Qual è il tag di apertura di una riga di una tabella?'","<table>", "<th>","<tr>",3);
-    private Question question3 = new Question("Domanda3","Risposta3a", "Risposta3b","Risposta3c",1);
-    private Question question4 = new Question("Domanda4","Risposta4a", "Risposta4b","Risposta4c",1);
-    private Question question5 = new Question("Domanda5","Risposta5a", "Risposta5b","Risposta5c",1);
+    private Question question1 = new Question("Qual è il tag per i link ipertestuali?","<body>", "<a>","<b>",2);
+    private Question question2 = new Question("Qual è il tag di apertura di una riga di una tabella?","<table>", "<th>","<tr>",3);
+    private Question question3 = new Question("Che tipo di proprietà CSS permette a un div di affiancarsi ad un altro?","float", "line-height","background-repeat",1);
+    private Question question4 = new Question("Quale simbolo rappresenta il selettore di ID?","@", "#",".",1);
+    private Question question5 = new Question("Che cosa succede con il seguente codice:" +"\n"+"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js\" crossorigin=\"anonymous\">"+"\n"+"</script>\n","appare un link", "si importa la libreria Jquery","Si usa un CSS esterno",1);
     private Question[] questions = new Question[]{question1, question2, question3, question4, question5};
     private int k = 0;
     private int ptperquest = 20;
