@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +22,8 @@ public class QuizActivity extends AppCompatActivity {
     private Question question1 = new Question("Qual è il tag per i link ipertestuali?","<body>", "<a>","<b>",2);
     private Question question2 = new Question("Qual è il tag di apertura di una riga di una tabella?","<table>", "<th>","<tr>",3);
     private Question question3 = new Question("Che tipo di proprietà CSS permette a un div di affiancarsi ad un altro?","float", "line-height","background-repeat",1);
-    private Question question4 = new Question("Quale simbolo rappresenta il selettore di ID?","@", "#",".",1);
-    private Question question5 = new Question("Che cosa succede con il seguente codice:" +"\n"+"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js\" crossorigin=\"anonymous\">"+"\n"+"</script>\n","appare un link", "si importa la libreria Jquery","Si usa un CSS esterno",1);
+    private Question question4 = new Question("Quale simbolo rappresenta il selettore di ID?","@", "#",".",2);
+    private Question question5 = new Question("Che cosa succede con il seguente codice:" +"\n"+"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js\" crossorigin=\"anonymous\">"+"\n"+"</script>\n","appare un link", "si importa la libreria Jquery","Si usa un CSS esterno",2);
     private Question[] questions = new Question[]{question1, question2, question3, question4, question5};
     private int k = 0;
     private int ptperquest = 20;
@@ -36,6 +37,8 @@ public class QuizActivity extends AppCompatActivity {
     private Button buttonConfirmNext;
 
     private TextView question;
+
+    private RadioGroup radioAnswers;
     private RadioButton option1;
     private RadioButton option2;
     private RadioButton option3;
@@ -54,6 +57,7 @@ public class QuizActivity extends AppCompatActivity {
 
         question = findViewById(R.id.text_view_question);
 
+        radioAnswers = findViewById(R.id.radio_group);
         option1 = findViewById(R.id.radio_button1);
         option2 = findViewById(R.id.radio_button2);
         option3 = findViewById(R.id.radio_button3);
@@ -89,8 +93,10 @@ public class QuizActivity extends AppCompatActivity {
                     changeQuestion();
                     setNrOfQuest();
                     setScore();
+                    cleanCheckBox();
                 }
-                if(k>=nrOfQuest)
+
+                    if(k>=nrOfQuest)
                 {
                     passToResult();
                     testCompleted = true;
@@ -155,23 +161,23 @@ public class QuizActivity extends AppCompatActivity {
     private void checkAnswer()
     {
 
-        int rightQuestion = questions[k].getAnswerNr();
-        int answered = 0;
+        int rightAnswer = questions[k].getAnswerNr();
+        int getanswer = 0;
 
         if(option1.isChecked())
         {
-            answered = 1;
+            getanswer = 1;
         }
         else if(option2.isChecked())
         {
-            answered = 2;
+            getanswer = 2;
         }
         else if(option3.isChecked())
         {
-            answered = 3;
+            getanswer = 3;
         }
 
-        if(answered == rightQuestion)
+        if(getanswer == rightAnswer)
         {
             score  = score+ptperquest;
         }
@@ -190,8 +196,9 @@ public class QuizActivity extends AppCompatActivity {
             question.setText(questions[k].getQuestion());
             option1.setText(questions[k].getOption1());
             option2.setText(questions[k].getOption2());
-            option2.setText(questions[k].getOption2());
             option3.setText(questions[k].getOption3());
+
+
 
         }
 
@@ -212,6 +219,10 @@ public class QuizActivity extends AppCompatActivity {
 
         scoreText.setText("Punteggio: "+String.valueOf(score));
 
+    }
+    private void cleanCheckBox()
+    {
+        radioAnswers.clearCheck();
     }
 
     private void passToResult()
