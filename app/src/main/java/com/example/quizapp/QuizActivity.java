@@ -23,12 +23,16 @@ import java.util.Locale;
 public class QuizActivity extends AppCompatActivity {
     private static final long COUNTDOWN_IN_MILLIS = 300000;
     private final int nrOfQuest = 5;
+    /*
     private Question question1 = new Question("Qual è il tag per i link ipertestuali?","<body>", "<a>","<b>",2);
     private Question question2 = new Question("Qual è il tag di apertura di una riga di una tabella?","<table>", "<th>","<tr>",3);
     private Question question3 = new Question("Che tipo di proprietà CSS permette a un div di affiancarsi ad un altro?","float", "line-height","background-repeat",1);
     private Question question4 = new Question("Quale simbolo rappresenta il selettore di ID?","@", "#",".",2);
     private Question question5 = new Question("Che cosa succede con il seguente codice:" +"\n"+"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js\" crossorigin=\"anonymous\">"+"\n"+"</script>\n","appare un link", "si importa la libreria Jquery","si usa un CSS esterno",2);
-    private Question[] questions = new Question[]{question1, question2, question3, question4, question5};
+    */
+    private Question[] questions = new Question[nrOfQuest];
+
+
     private int k = 0;
     private int ptperquest = 20;
     private boolean answered;
@@ -72,19 +76,43 @@ public class QuizActivity extends AppCompatActivity {
 
         textViewCountDown = findViewById(R.id.text_view_countdown);
 
+        try {
+            for (int i = 0; i < nrOfQuest; i++) {
+                String questText;
+                String[] opTexts = new String[3];
 
-        try
-        {
-            ReadQuestionsTextFile();
-        } catch (IOException e) {
+                questions[i] = new Question();
+
+
+                    questText = ReadQuestionsTextFile("question", i+1);
+                    questions[i].setQuestion(questText);
+
+                    for(int c = 0; c<3; c++)
+                    {
+                        opTexts[c] = ReadOptionsTextFile("option",i+1,c+1);
+                    }
+
+                    questions[i].setOption1(opTexts[0]);
+                    questions[i].setOption2(opTexts[1]);
+                    questions[i].setOption3(opTexts[2]);
+
+            }
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
+        questions[0].setAnswerNr(2);
+        questions[1].setAnswerNr(3);
+        questions[2].setAnswerNr(1);
+        questions[3].setAnswerNr(2);
+        questions[4].setAnswerNr(2);
 
 
         if (k==0)
         {
             setNrOfQuest();
-            changeQuestion();
+
+            changeQuestionByObject();
 
         }
         timeLeftInMillis = COUNTDOWN_IN_MILLIS;
@@ -102,7 +130,7 @@ public class QuizActivity extends AppCompatActivity {
                 {
 
                     k++;
-                    changeQuestion();
+                    changeQuestionByObject();
                     setNrOfQuest();
                     setScore();
                     cleanCheckBox();
@@ -199,7 +227,7 @@ public class QuizActivity extends AppCompatActivity {
             score = score + 0;
         }
     }
-    private void changeQuestion() {
+    private void changeQuestionByObject() {
 
 
 
@@ -211,12 +239,11 @@ public class QuizActivity extends AppCompatActivity {
             option2.setText(questions[k].getOption2());
             option3.setText(questions[k].getOption3());
 
-
-
         }
 
 
     }
+
 
     private void setNrOfQuest() {
 
@@ -246,11 +273,28 @@ public class QuizActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void ReadQuestionsTextFile() throws IOException {
+    public String ReadQuestionsTextFile(String fileName, int fileNum) throws IOException {
+
+        int resId = getResources().getIdentifier("raw/"+fileName+String.valueOf(fileNum), null, this.getPackageName());
+        //InputStream is = this.getResources().openRawResource(R.raw.string);
+        InputStream is = this.getResources().openRawResource(resId);
+        return readTextFile(is);
+    }
+
+    public String ReadOptionsTextFile(String fileName, int fileNum, int optNum ) throws IOException {
+
+        int resId = getResources().getIdentifier("raw/"+fileName+String.valueOf(fileNum)+"_"+String.valueOf(optNum), null, this.getPackageName());
+        //InputStream is = this.getResources().openRawResource(R.raw.string);
+        InputStream is = this.getResources().openRawResource(resId);
+        return readTextFile(is);
+    }
+
+    public String readTextFile(InputStream is){
+        String text ="";
         try{
             String string = "";
             StringBuilder stringBuilder = new StringBuilder();
-            InputStream is = this.getResources().openRawResource(R.raw.string);
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             while (true) {
                 try {
@@ -260,16 +304,17 @@ public class QuizActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 stringBuilder.append(string).append("\n");
-                question.setText(stringBuilder);
-                //textView.setText(stringBuilder);
+                text = stringBuilder.toString();
             }
             is.close();
-            Toast.makeText(getBaseContext(), stringBuilder.toString(),
-                    Toast.LENGTH_LONG).show();
+            //Toast.makeText(getBaseContext(), stringBuilder.toString(), Toast.LENGTH_LONG).show();
+
+
         }
         catch (IOException e){
-        e.printStackTrace();
+            e.printStackTrace();
         }
+        return text;
     }
 
 
