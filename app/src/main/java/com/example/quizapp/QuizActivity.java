@@ -14,6 +14,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Locale;
 
 public class QuizActivity extends AppCompatActivity {
@@ -68,6 +72,15 @@ public class QuizActivity extends AppCompatActivity {
 
         textViewCountDown = findViewById(R.id.text_view_countdown);
 
+
+        try
+        {
+            ReadQuestionsTextFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         if (k==0)
         {
             setNrOfQuest();
@@ -83,7 +96,6 @@ public class QuizActivity extends AppCompatActivity {
         buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 confirmAnswer();
 
                 if(answered==true)
@@ -105,6 +117,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
     }
+
     private void startCountDown() {
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -231,6 +244,32 @@ public class QuizActivity extends AppCompatActivity {
         String scr = String.valueOf(score);
         intent.putExtra("score",scr);
         startActivity(intent);
+    }
+
+    public void ReadQuestionsTextFile() throws IOException {
+        try{
+            String string = "";
+            StringBuilder stringBuilder = new StringBuilder();
+            InputStream is = this.getResources().openRawResource(R.raw.string);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            while (true) {
+                try {
+                    if ((string = reader.readLine()) == null) break;
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+                stringBuilder.append(string).append("\n");
+                question.setText(stringBuilder);
+                //textView.setText(stringBuilder);
+            }
+            is.close();
+            Toast.makeText(getBaseContext(), stringBuilder.toString(),
+                    Toast.LENGTH_LONG).show();
+        }
+        catch (IOException e){
+        e.printStackTrace();
+        }
     }
 
 
