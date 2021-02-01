@@ -23,13 +23,7 @@ import java.util.Locale;
 public class QuizActivity extends AppCompatActivity {
     private static final long COUNTDOWN_IN_MILLIS = 300000;
     private final int nrOfQuest = 5;
-    /*
-    private Question question1 = new Question("Qual è il tag per i link ipertestuali?","<body>", "<a>","<b>",2);
-    private Question question2 = new Question("Qual è il tag di apertura di una riga di una tabella?","<table>", "<th>","<tr>",3);
-    private Question question3 = new Question("Che tipo di proprietà CSS permette a un div di affiancarsi ad un altro?","float", "line-height","background-repeat",1);
-    private Question question4 = new Question("Quale simbolo rappresenta il selettore di ID?","@", "#",".",2);
-    private Question question5 = new Question("Che cosa succede con il seguente codice:" +"\n"+"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js\" crossorigin=\"anonymous\">"+"\n"+"</script>\n","appare un link", "si importa la libreria Jquery","si usa un CSS esterno",2);
-    */
+
     private Question[] questions = new Question[nrOfQuest];
 
 
